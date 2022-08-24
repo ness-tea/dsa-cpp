@@ -1,4 +1,4 @@
-// Linked List 
+// Linked List implementation
 
 #include "LinkedList.hpp"
 
@@ -134,6 +134,7 @@ int main()
         linkedList.CreateNode(i);
     }
 
+    // Test cases
     linkedList.DisplayNodes();
 
     linkedList.InsertNodeAtStart(11);

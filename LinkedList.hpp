@@ -1,4 +1,4 @@
-// LinkedList.hpp
+// Linked List implementation
 
 #include <iostream>
 using namespace std;
@@ -11,7 +11,7 @@ struct Node
         Value = value;
     };
 
-    T Value = 0;
+    T Value;
     Node* Next = nullptr;
 };
 
