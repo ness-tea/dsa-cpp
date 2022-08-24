@@ -1,68 +1,95 @@
 // Hash Table implementation
 
-#include "HashTable.hpp"
 #include "LinkedListTemplate.hpp"
+#include <iostream>
+using namespace std;
 
-HashTable::HashTable() : m_size(MAX_HASH_TABLE_SIZE)
+#define MAX_SIZE_DEFAULT 10
+
+struct HashEntry
 {
-    m_pHT = new LinkedList<HashEntry>[MAX_HASH_TABLE_SIZE];
-}
+    HashEntry(int key, int value)
+    {
+        Key = key;
+        Value = value;
+    }
 
-HashTable::HashTable(int size) : m_size(size)
+    int Key = 0;
+    int Value = 0;
+};
+
+
+template <typename T>
+class LinkedList;
+class HashTable
 {
-    m_pHT = new LinkedList<HashEntry>[size];
-}
-
-HashTable::~HashTable(){}
-
-int HashTable::Hash(int key)
-{
-    return key % m_size;
-}
-
-int HashTable::Search(int key)
-{
-    int retValue;
-    LinkedList linkedList = m_pHT[Hash(key)];
+private:
+    // Pointer to array of linked lists.
+    LinkedList<HashEntry>* m_pHT;
+    int m_size;
     
-    while (linkedList.m_pHead != nullptr)
+public:
+    HashTable() : m_size(MAX_SIZE_DEFAULT)
     {
-        if (linkedList.m_pHead->Data->Key == key)
-        {
-            retValue = linkedList.m_pHead->Data->Value;
-        }
+        m_pHT = new LinkedList<HashEntry>[MAX_SIZE_DEFAULT];
     }
 
-    return retValue;
-}
-
-void HashTable::Insert(int key, int value)
-{
-    HashEntry* newEntry = new HashEntry(key, value);
-    m_pHT[Hash(key)].CreateNode(newEntry);
-}
-
-LinkedList<HashEntry> HashTable::GetListForHashIndex(int index)
-{
-    return m_pHT[index];
-}
-
-void HashTable::PrintHashTable()
-{
-    for (int i = 0; i < m_size; i++)
+    HashTable(int size) : m_size(size)
     {
-        LinkedList<HashEntry> list = GetListForHashIndex(i);
-        Node<HashEntry>* curNode = list.m_pHead;
+        m_pHT = new LinkedList<HashEntry>[size];
+    }
 
-        while (curNode != nullptr)
+    ~HashTable(){}
+
+    int Hash(int key)
+    {
+        return key % m_size;
+    }
+
+    int Search(int key)
+    {
+        int retValue;
+        LinkedList linkedList = m_pHT[Hash(key)];
+        
+        while (linkedList.m_pHead != nullptr)
         {
-            cout << "(" << curNode->Data->Key << ", " << curNode->Data->Value << ")" << "\t";
-            curNode = curNode->Next;
+            if (linkedList.m_pHead->Data->Key == key)
+            {
+                retValue = linkedList.m_pHead->Data->Value;
+            }
         }
 
-        cout << endl;
+        return retValue;
     }
-}
+
+    void Insert(int key, int value)
+    {
+        HashEntry* newEntry = new HashEntry(key, value);
+        m_pHT[Hash(key)].CreateNode(newEntry);
+    }
+
+    LinkedList<HashEntry> GetListForHashIndex(int index)
+    {
+        return m_pHT[index];
+    }
+
+    void PrintHashTable()
+    {
+        for (int i = 0; i < m_size; i++)
+        {
+            LinkedList<HashEntry> list = GetListForHashIndex(i);
+            Node<HashEntry>* curNode = list.m_pHead;
+
+            while (curNode != nullptr)
+            {
+                cout << "(" << curNode->Data->Key << ", " << curNode->Data->Value << ")" << "\t";
+                curNode = curNode->Next;
+            }
+
+            cout << endl;
+        }
+    }
+};
 
 int main()
 {
