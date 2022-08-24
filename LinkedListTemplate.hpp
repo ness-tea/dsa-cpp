@@ -3,26 +3,27 @@
 #include <iostream>
 using namespace std;
 
+template <typename T>
 struct Node
 {
-    Node(int data)
+    Node(T data)
     {
         Data = data;
     };
 
-    int Data = 0;
+    T Data;
     Node* Next = nullptr;
 };
 
+template <typename T>
 class LinkedList
 {
 private:
-    Node* m_pHead = nullptr;
-    Node* m_pTail = nullptr;
+    Node<T>* m_pHead = nullptr;
+    Node<T>* m_pTail = nullptr;
 
 public:
     LinkedList(){};
-
     ~LinkedList()
     {        
         while (m_pHead != nullptr)
@@ -31,9 +32,9 @@ public:
         }
     };
 
-    void CreateNode(int data)
+    void CreateNode(T data)
     {
-        Node* newNode = new Node(data);
+        Node<T>* newNode = new Node(data);
         newNode->Data = data;
         newNode->Next = nullptr;
 
@@ -51,27 +52,28 @@ public:
         newNode = nullptr;
     }
 
-    void InsertNodeAtStart(int data)
+
+    void InsertNodeAtStart(T data)
     {
-        Node* newNode = new Node(data);
+        Node<T>* newNode = new Node(data);
         newNode->Data = data;
         newNode->Next = m_pHead;
         m_pHead = newNode;
     }
 
-    void InsertNodeAtEnd(int data)
+    void InsertNodeAtEnd(T data)
     {
-        Node* newNode = new Node(data);
+        Node<T>* newNode = new Node(data);
         newNode->Data = data;
         m_pTail->Next = newNode;
         m_pTail = newNode;
     }
 
-    void InsertNodeAtPosition(int data, int position)
+    void InsertNodeAtPosition(T data, int position)
     {
-        Node* newNode = new Node(data);
-        Node* prevNode = nullptr;
-        Node* curNode = m_pHead;
+        Node<T>* newNode = new Node(data);
+        Node<T>* prevNode = nullptr;
+        Node<T>* curNode = m_pHead;
 
         for (int i = 0; i < position; i++)
         {
@@ -85,15 +87,15 @@ public:
 
     void DeleteNodeAtStart()
     {
-        Node* oldHead = m_pHead;
+        Node<T>* oldHead = m_pHead;
         m_pHead = m_pHead->Next;
         delete oldHead;
     }
 
     void DeleteNodeAtEnd()
     {
-        Node* oldTail = m_pTail;
-        Node* curNode = m_pHead;
+        Node<T>* oldTail = m_pTail;
+        Node<T>* curNode = m_pHead;
 
         while (curNode->Next != oldTail)
         {
@@ -107,8 +109,8 @@ public:
 
     void DeleteNodeAtPosition(int position)
     {
-        Node* curNode = m_pHead;
-        Node* prevNode = nullptr;
+        Node<T>* curNode = m_pHead;
+        Node<T>* prevNode = nullptr;
 
         for (int i = 0; i < position; i++)
         {
@@ -122,7 +124,7 @@ public:
 
     void DisplayNodes()
     {
-        Node* current = m_pHead;
+        Node<T>* current = m_pHead;
 
         while (current != nullptr)
         {
@@ -132,43 +134,6 @@ public:
 
         cout << endl;
     }
+
+    friend class HashTable;
 };
-
-int main()
-{
-    LinkedList linkedList = LinkedList();
-    int numNodes = 10;
-
-    for (int i = 0; i < numNodes; i++)
-    {
-        linkedList.CreateNode(i);
-    }
-
-    // Test cases
-    linkedList.DisplayNodes();
-
-    linkedList.InsertNodeAtStart(11);
-    linkedList.DisplayNodes();
-
-    linkedList.InsertNodeAtEnd(31);
-    linkedList.DisplayNodes();  
-
-    linkedList.InsertNodeAtPosition(22, 3);
-    linkedList.DisplayNodes();
-
-    linkedList.DeleteNodeAtPosition(11);
-    linkedList.DisplayNodes();
-
-    linkedList.DeleteNodeAtStart();
-    linkedList.DisplayNodes();
-
-    linkedList.DeleteNodeAtEnd();
-    linkedList.DisplayNodes();
-
-    linkedList.DeleteNodeAtPosition(2);
-    linkedList.DisplayNodes();
-
-    linkedList.~LinkedList();
-
-    return 0;
-}
