@@ -1,4 +1,4 @@
-// Linked List implementation
+// Linked List Template
 
 #include <iostream>
 using namespace std;

@@ -1,4 +1,4 @@
-// Linked List implementation
+// Linked List implementation (int type) 
 
 #include <iostream>
 using namespace std;
