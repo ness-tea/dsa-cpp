@@ -14,18 +14,14 @@ struct HashEntry
     }
 
     int Key = 0;
-    int Value;
+    int Value = 0;
 };
+
 
 template <typename T>
 class LinkedList;
 class HashTable
 {
-private:
-    // Pointer to array of linked lists.
-    LinkedList<HashEntry>* m_pHT;
-    int m_size;
-
 public:
     HashTable();
     HashTable(int size);
@@ -35,5 +31,11 @@ public:
     int Search(int key);
     void Insert(int key, int value);
 
-    void Display();
+    LinkedList<HashEntry> GetListForHashIndex(int index);
+    void PrintHashTable();
+
+private:
+    // Pointer to array of linked lists.
+    LinkedList<HashEntry>* m_pHT;
+    int m_size;
 };

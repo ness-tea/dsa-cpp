@@ -6,12 +6,12 @@ using namespace std;
 template <typename T>
 struct Node
 {
-    Node(T data)
+    Node(T* data)
     {
         Data = data;
     };
 
-    T Data;
+    T* Data;
     Node* Next = nullptr;
 };
 
@@ -32,7 +32,7 @@ public:
         }
     };
 
-    void CreateNode(T data)
+    void CreateNode(T* data)
     {
         Node<T>* newNode = new Node(data);
         newNode->Data = data;
@@ -53,7 +53,7 @@ public:
     }
 
 
-    void InsertNodeAtStart(T data)
+    void InsertNodeAtStart(T* data)
     {
         Node<T>* newNode = new Node(data);
         newNode->Data = data;
@@ -61,7 +61,7 @@ public:
         m_pHead = newNode;
     }
 
-    void InsertNodeAtEnd(T data)
+    void InsertNodeAtEnd(T* data)
     {
         Node<T>* newNode = new Node(data);
         newNode->Data = data;
@@ -69,7 +69,7 @@ public:
         m_pTail = newNode;
     }
 
-    void InsertNodeAtPosition(T data, int position)
+    void InsertNodeAtPosition(T* data, int position)
     {
         Node<T>* newNode = new Node(data);
         Node<T>* prevNode = nullptr;
