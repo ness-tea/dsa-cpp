@@ -1,144 +1,172 @@
-//  Linked List Implementation                                   
+// Linked List 
 
 #include <iostream>
 using namespace std;
 
 struct Node
 {
-  int data;
-  Node* next;
+    Node(int value)
+    {
+        Value = value;
+    };
+
+    int Value = 0;
+    Node* Next = nullptr;
 };
 
 class LinkedList
 {
 private:
-  Node* m_head;
-  Node* m_tail;
+    Node* m_head = nullptr;
+    Node* m_tail = nullptr;
+
 public:
-  LinkedList()
-  {
-    m_head = nullptr;
-    m_tail = nullptr;
-  }
+    LinkedList(){};
+    ~LinkedList()
+    {        
+        while (m_head != nullptr)
+        {
+            DeleteNodeAtStart();
+        }
+    };
 
-  ~LinkedList()
-  {
-  }
-
-  void CreateNode(int data)
-  {
-    Node* temp = new Node;
-    temp->data = data;
-    temp->next = nullptr;
-
-    if (m_head != nullptr)
+    void CreateNode(int Value)
     {
-      m_tail->next = temp;
-      m_tail = temp;
-    }
-    else
-    {
-      m_head = temp;
-      m_tail = temp;
-      temp = nullptr;
-    }
-  }
+        Node* newNode = new Node(Value);
+        newNode->Value = Value;
+        newNode->Next = nullptr;
 
-  void Display()
-  {
-    Node* temp = new Node;
-    temp = m_head;
+        if (m_head != nullptr)
+        {
+            m_tail->Next = newNode;
+            m_tail = newNode;
+        }
+        else
+        {
+            m_head = newNode;
+            m_tail = newNode;
+        }
 
-    while (temp != nullptr)
-    {
-      cout << temp->data << "\t";
-      temp = temp->next;
-    }
-  }
-
-  void InsertNodeAtStart(int data)
-  {
-    Node* temp = new Node;
-    temp->data = data;
-    temp->next = m_head;
-    m_head = temp;
-  }
-
-  void InsertNodeAtEnd(int data)
-  {
-    Node* temp = new Node;
-    temp->data = data;
-    m_tail->next = temp;
-    m_tail = temp;
-  }
-
-  void InsertNodeAtPosition(int data, int position)
-  {
-    Node* temp = new Node;
-    Node* cur = m_head;
-    Node* pre = nullptr;
-
-    for (int i = 0; i < position; i++)
-    {
-      pre = cur;
-      cur = cur->next;
+        newNode = nullptr;
     }
 
-    temp->data = data;
-    pre->next = temp;
-    temp->next = cur;
-  }
-
-  void DeleteNodeAtStart()
-  {
-    Node* temp = new Node;
-    temp = m_head;
-    m_head = m_head->next;
-    delete temp;
-  }
-
-  void DeleteNodeAtEnd()
-  {
-    Node* cur = new Node;
-    Node* prev = new Node;
-    cur = m_head;
-
-    while (cur->next != nullptr)
+    void InsertNodeAtStart(int Value)
     {
-      prev = cur;
-      cur = cur->next;
+        Node* newNode = new Node(Value);
+        newNode->Value = Value;
+        newNode->Next = m_head;
+        m_head = newNode;
     }
 
-    prev->next = nullptr;
-    m_tail = prev;
-    delete cur;
-  }
-
-  void DeleteNodeAtPosition(int position)
-  {
-    Node* cur = new Node;
-    Node* prev = new Node;
-
-    for (int i = 0; i < position-1; i++)
+    void InsertNodeAtEnd(int Value)
     {
-      prev = cur;
-      cur = cur->next;
+        Node* newNode = new Node(Value);
+        newNode->Value = Value;
+        m_tail->Next = newNode;
+        m_tail = newNode;
     }
 
-    prev->next = cur->next;
-    delete cur;
-  }
-
-  int main()
-  {
-    LinkedList chain = LinkedList();
-
-    for (int i = 0; i < 10; i++)
+    void InsertNodeAtPosition(int Value, int position)
     {
-      CreateNode(i);
-      cout << m_tail->data << endl;
+        Node* newNode = new Node(Value);
+        Node* prevNode = nullptr;
+        Node* curNode = m_head;
+
+        for (int i = 0; i < position; i++)
+        {
+            prevNode = curNode;
+            curNode = curNode->Next;
+        }
+
+        prevNode->Next = newNode;
+        newNode->Next = curNode;
     }
 
-    return (0);
-  }
+    void DeleteNodeAtStart()
+    {
+        Node* oldHead = m_head;
+        m_head = m_head->Next;
+        delete oldHead;
+    }
+
+    void DeleteNodeAtEnd()
+    {
+        Node* oldTail = m_tail;
+        Node* curNode = m_head;
+
+        while (curNode->Next != oldTail)
+        {
+            curNode = curNode->Next;
+        }
+
+        curNode->Next = nullptr;
+        m_tail = curNode;
+        delete oldTail;
+    }
+
+    void DeleteNodeAtPosition(int position)
+    {
+        Node* curNode = m_head;
+        Node* prevNode = nullptr;
+
+        for (int i = 0; i < position; i++)
+        {
+            prevNode = curNode;
+            curNode = curNode->Next;
+        }
+
+        prevNode->Next = curNode->Next;
+        delete curNode;
+    }
+
+    void DisplayNodes()
+    {
+        Node* current = m_head;
+
+        while (current != nullptr)
+        {
+            cout << current->Value << "\t";
+            current = current->Next;
+        }
+
+        cout << endl;
+    }
 };
+
+int main()
+{
+    LinkedList linkedList = LinkedList();
+    int numNodes = 10;
+
+    for (int i = 0; i < numNodes; i++)
+    {
+        linkedList.CreateNode(i);
+    }
+
+    linkedList.DisplayNodes();
+
+    linkedList.InsertNodeAtStart(11);
+    linkedList.DisplayNodes();
+
+    linkedList.InsertNodeAtEnd(31);
+    linkedList.DisplayNodes();  
+
+    linkedList.InsertNodeAtPosition(22, 3);
+    linkedList.DisplayNodes();
+
+    linkedList.DeleteNodeAtPosition(11);
+    linkedList.DisplayNodes();
+
+    linkedList.DeleteNodeAtStart();
+    linkedList.DisplayNodes();
+
+    linkedList.DeleteNodeAtEnd();
+    linkedList.DisplayNodes();
+
+    linkedList.DeleteNodeAtPosition(2);
+    linkedList.DisplayNodes();
+
+    linkedList.~LinkedList();
+
+    return 0;
+}
