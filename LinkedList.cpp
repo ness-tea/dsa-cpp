@@ -1,141 +1,132 @@
 // Linked List 
 
-#include <iostream>
-using namespace std;
+#include "LinkedList.hpp"
 
-struct Node
-{
-    Node(int value)
+template <typename T>
+LinkedList<T>::LinkedList(){}
+
+template <typename T>
+LinkedList<T>::~LinkedList()
+{        
+    while (m_head != nullptr)
     {
-        Value = value;
-    };
-
-    int Value = 0;
-    Node* Next = nullptr;
-};
-
-class LinkedList
-{
-private:
-    Node* m_head = nullptr;
-    Node* m_tail = nullptr;
-
-public:
-    LinkedList(){};
-    ~LinkedList()
-    {        
-        while (m_head != nullptr)
-        {
-            DeleteNodeAtStart();
-        }
-    };
-
-    void CreateNode(int Value)
-    {
-        Node* newNode = new Node(Value);
-        newNode->Value = Value;
-        newNode->Next = nullptr;
-
-        if (m_head != nullptr)
-        {
-            m_tail->Next = newNode;
-            m_tail = newNode;
-        }
-        else
-        {
-            m_head = newNode;
-            m_tail = newNode;
-        }
-
-        newNode = nullptr;
+        DeleteNodeAtStart();
     }
+}
 
-    void InsertNodeAtStart(int Value)
-    {
-        Node* newNode = new Node(Value);
-        newNode->Value = Value;
-        newNode->Next = m_head;
-        m_head = newNode;
-    }
+template <typename T>
+void LinkedList<T>::CreateNode(T Value)
+{
+    Node<T>* newNode = new Node(Value);
+    newNode->Value = Value;
+    newNode->Next = nullptr;
 
-    void InsertNodeAtEnd(int Value)
+    if (m_head != nullptr)
     {
-        Node* newNode = new Node(Value);
-        newNode->Value = Value;
         m_tail->Next = newNode;
         m_tail = newNode;
     }
-
-    void InsertNodeAtPosition(int Value, int position)
+    else
     {
-        Node* newNode = new Node(Value);
-        Node* prevNode = nullptr;
-        Node* curNode = m_head;
-
-        for (int i = 0; i < position; i++)
-        {
-            prevNode = curNode;
-            curNode = curNode->Next;
-        }
-
-        prevNode->Next = newNode;
-        newNode->Next = curNode;
+        m_head = newNode;
+        m_tail = newNode;
     }
 
-    void DeleteNodeAtStart()
+    newNode = nullptr;
+}
+
+template <typename T>
+void LinkedList<T>::InsertNodeAtStart(T Value)
+{
+    Node<T>* newNode = new Node(Value);
+    newNode->Value = Value;
+    newNode->Next = m_head;
+    m_head = newNode;
+}
+
+template <typename T>
+void LinkedList<T>::InsertNodeAtEnd(T Value)
+{
+    Node<T>* newNode = new Node(Value);
+    newNode->Value = Value;
+    m_tail->Next = newNode;
+    m_tail = newNode;
+}
+
+template <typename T>
+void LinkedList<T>::InsertNodeAtPosition(T Value, int position)
+{
+    Node<T>* newNode = new Node(Value);
+    Node<T>* prevNode = nullptr;
+    Node<T>* curNode = m_head;
+
+    for (int i = 0; i < position; i++)
     {
-        Node* oldHead = m_head;
-        m_head = m_head->Next;
-        delete oldHead;
+        prevNode = curNode;
+        curNode = curNode->Next;
     }
 
-    void DeleteNodeAtEnd()
+    prevNode->Next = newNode;
+    newNode->Next = curNode;
+}
+
+template <typename T>
+void LinkedList<T>::DeleteNodeAtStart()
+{
+    Node<T>* oldHead = m_head;
+    m_head = m_head->Next;
+    delete oldHead;
+}
+
+template <typename T>
+void LinkedList<T>::DeleteNodeAtEnd()
+{
+    Node<T>* oldTail = m_tail;
+    Node<T>* curNode = m_head;
+
+    while (curNode->Next != oldTail)
     {
-        Node* oldTail = m_tail;
-        Node* curNode = m_head;
-
-        while (curNode->Next != oldTail)
-        {
-            curNode = curNode->Next;
-        }
-
-        curNode->Next = nullptr;
-        m_tail = curNode;
-        delete oldTail;
+        curNode = curNode->Next;
     }
 
-    void DeleteNodeAtPosition(int position)
+    curNode->Next = nullptr;
+    m_tail = curNode;
+    delete oldTail;
+}
+
+template <typename T>
+void LinkedList<T>::DeleteNodeAtPosition(int position)
+{
+    Node<T>* curNode = m_head;
+    Node<T>* prevNode = nullptr;
+
+    for (int i = 0; i < position; i++)
     {
-        Node* curNode = m_head;
-        Node* prevNode = nullptr;
-
-        for (int i = 0; i < position; i++)
-        {
-            prevNode = curNode;
-            curNode = curNode->Next;
-        }
-
-        prevNode->Next = curNode->Next;
-        delete curNode;
+        prevNode = curNode;
+        curNode = curNode->Next;
     }
 
-    void DisplayNodes()
+    prevNode->Next = curNode->Next;
+    delete curNode;
+}
+
+template <typename T>
+void LinkedList<T>::DisplayNodes()
+{
+    Node<T>* current = m_head;
+
+    while (current != nullptr)
     {
-        Node* current = m_head;
-
-        while (current != nullptr)
-        {
-            cout << current->Value << "\t";
-            current = current->Next;
-        }
-
-        cout << endl;
+        cout << current->Value << "\t";
+        current = current->Next;
     }
-};
+
+    cout << endl;
+}
 
 int main()
 {
-    LinkedList linkedList = LinkedList();
+    LinkedList<int> linkedList;
     int numNodes = 10;
 
     for (int i = 0; i < numNodes; i++)
