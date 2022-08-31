@@ -1,6 +1,6 @@
 // Hash Table implementation
 
-#include "LinkedListTemplate.hpp"
+#include "LinkedList.hpp"
 #include <iostream>
 using namespace std;
 
@@ -25,21 +25,28 @@ class HashTable
 {
 private:
     // Pointer to array of linked lists.
-    LinkedList<HashEntry>* m_pHT;
+    LinkedList<HashEntry*>* m_pHT;
     int m_size;
     
 public:
     HashTable() : m_size(MAX_SIZE_DEFAULT)
     {
-        m_pHT = new LinkedList<HashEntry>[MAX_SIZE_DEFAULT];
+        m_pHT = new LinkedList<HashEntry*>[MAX_SIZE_DEFAULT];
     }
 
     HashTable(int size) : m_size(size)
     {
-        m_pHT = new LinkedList<HashEntry>[size];
+        m_pHT = new LinkedList<HashEntry*>[size];
     }
 
-    ~HashTable(){}
+    ~HashTable()
+    {
+        for (int i = 0; i < m_size; i++)
+        {
+            m_pHT[i].~LinkedList();
+
+        }
+    }
 
     int Hash(int key)
     {
@@ -49,7 +56,7 @@ public:
     int Search(int key)
     {
         int retValue;
-        LinkedList linkedList = m_pHT[Hash(key)];
+        LinkedList<HashEntry*> linkedList = m_pHT[Hash(key)];
         
         while (linkedList.m_pHead != nullptr)
         {
@@ -68,21 +75,21 @@ public:
         m_pHT[Hash(key)].CreateNode(newEntry);
     }
 
-    LinkedList<HashEntry> GetListForHashIndex(int index)
+    LinkedList<HashEntry*>* GetListForHashIndex(int index)
     {
-        return m_pHT[index];
+        return &m_pHT[index];
     }
 
     void PrintHashTable()
     {
         for (int i = 0; i < m_size; i++)
         {
-            LinkedList<HashEntry> list = GetListForHashIndex(i);
-            Node<HashEntry>* curNode = list.m_pHead;
+            LinkedList<HashEntry*>* pList = GetListForHashIndex(i);
+            Node<HashEntry*>* curNode = pList->m_pHead;
 
             while (curNode != nullptr)
             {
-                cout << "(" << curNode->Data->Key << ", " << curNode->Data->Value << ")" << "\t";
+                cout << "(" << curNode->Data->Key << ", " << curNode->Data->Value << ") - ";
                 curNode = curNode->Next;
             }
 
@@ -96,17 +103,14 @@ int main()
     HashTable hashTable = HashTable();
 
     // Test values
-    HashEntry entry1 = HashEntry(3, 3);
-    HashEntry entry2 = HashEntry(16, 6);
-    HashEntry entry3 = HashEntry(21, 1);
-    HashEntry entry4 = HashEntry(86, 8);
-
-    hashTable.Insert(entry1.Key, entry1.Value);
-    hashTable.Insert(entry2.Key, entry2.Value);
-    hashTable.Insert(entry3.Key, entry3.Value);
-    hashTable.Insert(entry4.Key, entry4.Value);
+    hashTable.Insert(3, 3);
+    hashTable.Insert(16, 6);
+    hashTable.Insert(21, 1);
+    hashTable.Insert(86, 8);
 
     hashTable.PrintHashTable();
+    
+    hashTable.~HashTable();
 
     return 0;
 }
