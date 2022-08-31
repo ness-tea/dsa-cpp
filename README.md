@@ -1,2 +1,2 @@
-# DataStructAlgo-cpp
-Implementations of different data structures and algorithms in c++.
+# Data Structures & Algorithms
+Practicing data struct and algorithm implementations in C++.
