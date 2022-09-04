@@ -29,7 +29,7 @@ bool IsUnique(string input)
     }
     else
     {
-        for (int i = 0; i < input.length(); i++)
+        for (int i = 0; i < input.length() - 1; i++)
         {
             for (int j = i + 1; j < input.length(); j++)
             {
@@ -46,7 +46,13 @@ bool IsUnique(string input)
 
 int main()
 {
-    string input1 = "coffee", input2 = "Oinkle";
+    string input1, input2;
+
+    cout << "Enter input1 value: "; 
+    cin >> input1;
+
+    cout << "Enter input1 value: ";
+    cin >> input2;
 
     cout << "Is " << input1 << " a unique string? " << IsUnique(input1) << endl;
     cout << "Is " << input2 << " a unique string: " << IsUnique(input2) << endl;
