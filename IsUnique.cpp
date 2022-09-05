@@ -49,10 +49,10 @@ int main()
     string input1, input2;
 
     cout << "Enter input1 value: "; 
-    cin >> input1;
+    getline(cin, input1);
 
     cout << "Enter input1 value: ";
-    cin >> input2;
+    getline(cin, input2);
 
     cout << "Is " << input1 << " a unique string? " << IsUnique(input1) << endl;
     cout << "Is " << input2 << " a unique string: " << IsUnique(input2) << endl;

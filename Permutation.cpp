@@ -29,10 +29,10 @@ int main()
     string input1, input2;
 
     cout << "Enter input1 value: "; 
-    cin >> input1;
+    getline(cin, input1);
 
     cout << "Enter input1 value: ";
-    cin >> input2;
+    getline(cin, input2);
 
     cout << "Is " << input2 << " a permutation of " << input1 << "? " << IsPermutation(input1, input2) << endl;
     return 0;
