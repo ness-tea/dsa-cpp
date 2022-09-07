@@ -39,16 +39,12 @@ bool IsPermutation(string input1, string input2)
     return true;
 }
 
+bool IsPermutatedPalindrome(string input)
+{
+    return false;
+}
+
 int main()
 {
-    string input1, input2;
-
-    cout << "Enter input1 value: "; 
-    getline(cin, input1);
-
-    cout << "Enter input1 value: ";
-    getline(cin, input2);
-
-    cout << "Is " << input2 << " a permutation of " << input1 << "? " << IsPermutation(input1, input2) << endl;
     return 0;
 }
