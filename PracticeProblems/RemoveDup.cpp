@@ -5,37 +5,26 @@ using namespace std;
 void RemoveDup(LinkedList<int>& linkedList)
 {
     Node<int>* p1 = linkedList.m_pHead;
-    Node<int>* p2 = p1->Next;
-    Node<int>* prevp2 = p1;
 
     while (p1 != nullptr)
     {
-        while (p2 != nullptr)
+        Node<int>* p2 = p1;
+
+        while (p2->Next != nullptr)
         {
-            if (p1->Data == p2->Data)
+            if (p1->Data == p2->Next->Data)
             {
-                Node<int>* dup = p2;
-                p2 = p2->Next;
-                prevp2->Next = p2;
+                Node<int>* dup = p2->Next;
+                p2->Next = p2->Next->Next;
                 delete dup;
             }
             else
             {
-                prevp2 = p2;
                 p2 = p2->Next;
             }
         }
 
-        if (p1->Next != nullptr)
-        {
-            p1 = p1->Next;
-            p2 = p1->Next;
-            prevp2 = p1;
-        }
-        else
-        {
-            break;
-        }
+        p1 = p1->Next;
     }
 }
 
