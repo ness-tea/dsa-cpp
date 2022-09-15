@@ -30,7 +30,7 @@ struct Node<T*>
 template <typename T>
 class LinkedList
 {
-private:
+public:
     Node<T>* m_pHead = nullptr;
     Node<T>* m_pTail = nullptr;
 
