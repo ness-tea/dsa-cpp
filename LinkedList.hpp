@@ -44,7 +44,7 @@ public:
         }
     };
 
-    void CreateNode(T& data)
+    Node<T>& CreateNode(T& data)
     {
         Node<T>* newNode = new Node(data);
         newNode->Data = data;
@@ -61,7 +61,7 @@ public:
             m_pTail = newNode;
         }
 
-        newNode = nullptr;
+        return *newNode;
     }
 
 
