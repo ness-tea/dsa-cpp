@@ -52,21 +52,22 @@ int main()
     cout << "Enter number of nodes to create in linked list: ";
     cin >> numNodes;
 
-    int* pIndices = new int[numNodes];
-
     for (int i = 0; i < numNodes; i++)
     {
+        int value;
         cout << "Enter index " << i << ": ";
-        cin >> pIndices[i];
+        cin >> value;
 
-        linkedList.CreateNode(pIndices[i]);
+        linkedList.CreateNode(value);
     }
+
+    int partition;
+    cout << "Enter partitioin value: ";
+    cin >> partition;
 
     linkedList.DisplayNodes();
 
-    Partition(linkedList, 5);
-
-    delete pIndices;
+    Partition(linkedList, partition);
 
     return 0;
 }
