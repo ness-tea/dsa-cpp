@@ -47,7 +47,6 @@ public:
     Node<T>& CreateNode(T& data)
     {
         Node<T>* newNode = new Node(data);
-        newNode->Data = data;
         newNode->Next = nullptr;
 
         if (m_pHead != nullptr)
