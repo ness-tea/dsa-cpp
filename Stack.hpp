@@ -72,9 +72,17 @@ public:
     {
         return (m_pTop == nullptr);
     };
-};
 
-int main()
-{
-    return 0;
-}
+    void DisplayStackNodes()
+    {
+        Node* pTemp = m_pTop;
+        cout << "Top" << endl;
+        while (pTemp != nullptr)
+        {
+            cout << pTemp->Data << endl;
+            pTemp = pTemp->Next;
+        }
+
+        cout << "Bottom" << endl;
+    }
+};

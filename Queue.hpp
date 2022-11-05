@@ -44,7 +44,7 @@ public:
         {
             m_pFirst->Next = pNewNode;
         }
-                m_pLast->Next = pNewNode;
+        
         m_pLast->Next = pNewNode;
         m_pLast = pNewNode;
     };
@@ -66,11 +66,16 @@ public:
     {
         return (m_pFirst == nullptr && m_pLast == nullptr);
     }
-};
 
-int main()
-{
-    Queue queue = new Queue(1);
-    
-    return 0;
-}
+    void DisplayQueueNodes()
+    {
+        Node* pTemp = m_pFirst;
+        cout << "First" << endl;
+        while (pTemp != nullptr)
+        {
+            cout << pTemp->Data << " ";
+            pTemp = pTemp->Next;
+        }
+        cout << endl << "Last" << endl;
+    }
+};
