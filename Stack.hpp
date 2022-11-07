@@ -3,25 +3,27 @@
 using namespace std;
 
 template <typename T>
+struct Node
+{
+    Node(T data)
+    {
+        this->Data = data;
+    };
+
+    T Data = 0;
+    Node* Next = nullptr;
+};
+
+template <typename T>
 class Stack
 {
 public:
-    struct Node
-    {
-        Node(T data)
-        {
-            this->Data = data;
-        };
+    Node<T>* m_pTop = nullptr;
 
-        T Data = 0;
-        Node* Next = nullptr;
-    };
-
-    Node* m_pTop = nullptr;
-
+    Stack(){};
     Stack(T data)
     {
-        Node* pTemp = new Node(data);
+        Node<T>* pTemp = new Node(data);
 
         if (m_pTop == nullptr)
         {
@@ -38,7 +40,7 @@ public:
     {
         while (m_pTop != nullptr)
         {
-            Node* pTemp = m_pTop;
+            Node<T>* pTemp = m_pTop;
             m_pTop = m_pTop->Next;
             delete pTemp;
         }
@@ -46,14 +48,14 @@ public:
 
     void Push(T data)
     {
-        Node* pNewNode = new Node(data);
+        Node<T>* pNewNode = new Node(data);
         pNewNode->Next = m_pTop;
         m_pTop = pNewNode;
     };
 
-    Node* Pop()
+    Node<T>* Pop()
     {
-        Node* pTemp = m_pTop;
+        Node<T>* pTemp = m_pTop;
 
         if (m_pTop != nullptr)
         {
@@ -75,7 +77,7 @@ public:
 
     void DisplayStackNodes()
     {
-        Node* pTemp = m_pTop;
+        Node<T>* pTemp = m_pTop;
         cout << "Top" << endl;
         while (pTemp != nullptr)
         {
