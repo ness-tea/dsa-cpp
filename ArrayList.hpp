@@ -5,18 +5,19 @@ using namespace std;
 
 #define MAX_SIZE_DEFAULT 2
 
+template <typename T>
 class ArrayList
 {
 private:
     int m_length = MAX_SIZE_DEFAULT;
     int curIndex = 0;
-    int* m_pArray = nullptr;
+    T* m_pArray = nullptr;
 
     void Resize()
     {
         m_length *= 2;
-        int* oldArray = m_pArray;
-        int* newArray = new int[m_length];
+        T* oldArray = m_pArray;
+        T* newArray = new T[m_length];
 
         for (int i = 0; i < m_length; i++)
         {
@@ -32,17 +33,17 @@ private:
 public:
     ArrayList()
     {
-        m_pArray = new int[MAX_SIZE_DEFAULT];
+        m_pArray = new T[MAX_SIZE_DEFAULT];
     };
 
     ArrayList(int size) : m_length(size)
     {
-        m_pArray = new int[size];
+        m_pArray = new T[size];
     }
 
     ~ArrayList(){};
 
-    void Add(int entry)
+    void Add(T entry)
     {
         if (curIndex == m_length)
         {
@@ -53,16 +54,3 @@ public:
         curIndex++;
     }
 };
-
-int main()
-{
-    ArrayList arrayList = ArrayList();
-
-    for (int i = 0; i < 50; i++)
-    {
-        arrayList.Add(i);
-        cout << i << endl;
-    }
-
-    return 0;
-}
