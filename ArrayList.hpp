@@ -43,6 +43,16 @@ public:
 
     ~ArrayList(){};
 
+    int GetCurrentIndex()
+    {
+        return curIndex;
+    }   
+
+    T GetEntry(int index)
+    {
+        return m_pArray[index];
+    }
+
     void Add(T entry)
     {
         if (curIndex == m_length)
@@ -52,5 +62,11 @@ public:
 
         m_pArray[curIndex] = entry;
         curIndex++;
+    }
+
+    void Remove()
+    {
+        m_pArray[curIndex] = 0;
+        curIndex--;
     }
 };
